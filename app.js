@@ -1,4 +1,9 @@
 const express = require('express');
+const db = require('./config/mongoose-connection')
+const ownersRouter = require('./routes/ownersRouter');
+const productsRouter = require('./routes/productsRouter');
+const usersRouter = require('./routes/usersRouter');
+
 const app = express();
 
 const cookieParser = require('cookie-parser');
@@ -10,10 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser()) // use to read cookies on another routes
 
-
-app.get('/', function(req, res){
-    res.send("hello");
-})
+app.use("/owners", ownersRouter);
+app.use("/users", usersRouter);
+app.use("/products", productsRouter);
 
 app.listen(3000, function(req, res){
     console.log("Running");
