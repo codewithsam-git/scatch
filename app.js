@@ -6,6 +6,8 @@ const usersRouter = require('./routes/usersRouter');
 const app = express();
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const expressSession = require("express-session");
+const flash = require("flash");
 
 require('dotenv').config();  // helps to use value from .env to another files
 app.set("view engine", "ejs");
@@ -13,7 +15,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser()) // use to read cookies on another routes
-
+app.use(
+    expressSession({
+        resave: false,
+        saveUninitialized: false,
+        secret: process.env.EXPRESS_SESSION_SECRET
+    })
+)
+app.use(flash())
 app.use("/owners", ownersRouter);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
