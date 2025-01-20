@@ -10,7 +10,7 @@ module.exports = async function(req, res, next){
     try {
         let decode = jwt.verify(req.cookies.token, process.env.JWT_KEY);
         let user = await userModel.findOne({email: decode.email}).select("-password")
-        res.user = user;
+        req.user = user;
         next();
     } catch (err) {
         req.flash("error", "Something went wrong");
