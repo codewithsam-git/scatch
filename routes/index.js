@@ -12,6 +12,7 @@ router.get("/", function (req, res) {
 router.get('/shop', isLoggedIn, async function (req, res) {
     let products = await productModel.find();
     let success = req.flash("success");
+    // res.send({"responseMessage": "Data fetched successfully!", data: products});
     res.render("shop", { products, success });
 });
 
