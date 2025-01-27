@@ -22,7 +22,8 @@ module.exports.registerUser = async function (req, res) {
                     let token = generateToken(user);
                     res.cookie("token", token);
                     // console.log(req.cookies.token);
-                    res.send("User created successfully.");
+                    // res.send("User created successfully.");
+                    res.redirect('/');
                 }
             })
         })
