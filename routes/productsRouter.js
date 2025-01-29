@@ -11,15 +11,15 @@ router.get('/', function (req, res) {
 router.post('/create', upload.single("image"), async function (req, res) {
     try {
         console.log(req.body);
-        let {name, price, discount, bgcolor, panelcolor, textcolor} = req.body
+        let { name, price, discount, bgcolor, panelcolor, textcolor } = req.body
         let product = await productModel.create({
-            name, 
-            price, 
-            discount, 
-            bgcolor, 
-            panelcolor, 
-            textcolor, 
-            image: req.file.buffer 
+            name,
+            price,
+            discount,
+            bgcolor,
+            panelcolor,
+            textcolor,
+            image: req.file.buffer
         });
         // req.flash("success", "Product created successfully.");
         // res.redirect('/owners/admin');
@@ -29,5 +29,16 @@ router.post('/create', upload.single("image"), async function (req, res) {
         console.log("products/create: ", error)
     }
 })
+
+router.post("/update/:id",  upload.single("image"), async function (req, res) {
+    let { name, price, discount, bgcolor, panelcolor, textcolor } = req.body;
+    await productModel.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            name, price, discount, bgcolor, panelcolor, textcolor
+        }
+    )
+    res.redirect("/owners/account");
+});
 
 module.exports = router

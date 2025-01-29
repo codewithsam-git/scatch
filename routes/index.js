@@ -22,19 +22,25 @@ router.get('/cart', isLoggedIn, async function (req, res) {
     res.render("cart", {user});
 });
 
-router.get('/account', async function (req, res) {
-    // let  user = await userModel.findOne({email: req.user.email}).populate('cart');
-    // console.log(user);
-    let products = await productModel.find();
-    res.render("account", {products});
-});
+// router.get('/account', async function (req, res) {
+//     // let  user = await userModel.findOne({email: req.user.email}).populate('cart');
+//     // console.log(user);
+//     let products = await productModel.find();
+//     res.render("account", {products});
+// });
 
-router.get('/delete/:id', async function (req, res) {
-    let user = await productModel.deleteOne({ _id: req.params.id });
-    console.log("Deleted User: ", user);
-    let products = await productModel.find();
-    res.render("account", {products});
-});
+// router.get('/delete/:id', async function (req, res) {
+//     let user = await productModel.deleteOne({ _id: req.params.id });
+//     console.log("Deleted User: ", user);
+//     let products = await productModel.find();
+//     res.render("account", {products});
+// });
+
+// router.get('/edit/:id', async function (req, res) {
+//     let product = await productModel.findOne({ _id: req.params.id });
+//     // let products = await productModel.find();
+//     res.render("edit", {product});
+// });
 
 router.get('/addtocart/:id', isLoggedIn, async function (req, res) {
     console.log(req.user);

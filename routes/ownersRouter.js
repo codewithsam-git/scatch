@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router()
 const ownerModel = require('../models/owner-model');
 const { generateToken } = require('../utils/generateToken');
+const productModel = require('../models/product-model');
 
 router.get('/', function (req, res) {
     res.send("ownersRouter working");
@@ -38,6 +39,22 @@ router.post('/admin', async function (req, res) {
 
 router.get('/add', function (req, res) {
     res.render("createproducts");
-})
+});
+
+router.get('/account', async function (req, res) {
+    let products = await productModel.find();
+    res.render("account", { products });
+});
+
+router.get('/delete/:id', async function (req, res) {
+    let user = await productModel.deleteOne({ _id: req.params.id });
+    console.log("Deleted User: ", user);
+    res.redirect('/owners/account')
+});
+
+router.get('/edit/:id', async function (req, res) {
+    let product = await productModel.findOne({ _id: req.params.id });
+    res.render("edit", { product });
+});
 
 module.exports = router
